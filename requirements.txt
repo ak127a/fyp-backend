@@ -1,0 +1,5 @@
+magenta
+ffmpeg
+flask-cors
+mido
+pretty_midi

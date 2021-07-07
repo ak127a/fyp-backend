@@ -1,0 +1,11 @@
+Backend --
+magenta
+pretty_midi
+note_seq
+flask,flask-cors
+
+Frontend--
+Recorder.js
+axios
+magenta.js
+
