@@ -34,7 +34,7 @@ def audio():
         with open("audio.wav", "wb") as aud:
             aud_stream = file.read()
             aud.write(aud_stream)
-        result = call("audio-to-midi audio.wav -b 120 -t 900 -C 1")
+        result = call("audio-to-midi audio.wav -b 120 -t 500 -C 1")
         bundle = sequence_generator_bundle.read_bundle_file('./basic_rnn.mag')
         generator_map = melody_rnn_sequence_generator.get_generator_map()
         melody_rnn = generator_map['basic_rnn'](checkpoint=None, bundle=bundle)
@@ -44,10 +44,14 @@ def audio():
         midi_data = pretty_midi.PrettyMIDI('audio.wav.mid')
         # convert into note sequence
         seq = midi_io.midi_to_note_sequence(midi_data)
-        num_steps = 130  # change this for shorter or longer sequences
-        # the higher the temperature the more random the sequence.
-        temperature = 1.2
+        
+        # num_steps = 130  # change this for shorter or longer sequences
+        # # the higher the temperature the more random the sequence.
+        # temperature = 1.2
 
+        num_steps = int(request.args.get('steps'))
+        temperature = float(request.args.get('temp'))
+        
         input_sequence = seq
 
         # Set the start time to begin on the next step after the last note ends.
